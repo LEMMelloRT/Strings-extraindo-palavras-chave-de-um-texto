@@ -1,4 +1,4 @@
-#Aula 02: Construindo uma página#
+#Aula 06: Ordenando palavras frequentes#
 <!DOCTYPE html> 
 
 <html lang="pt-BT"> 
@@ -19,11 +19,9 @@
       <button id="botao-palavrachave">Extrair</button> 
       <div id="resultado-palavrachave"></div> 
     </div> 
-      
-    <script src="script.js"></script> 
+      <script src="script.js"></script> 
   </body> 
-</html> 
-
+</html>
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"); 
 
@@ -112,16 +110,48 @@ h1 {
   font-size: 2.5rem; 
   justify-content: center; 
   margin-bottom: 2rem; 
-  max-width: 100%; 
+  max-width: 100%;
+  const botaoMostraPalavras = document.querySelector("#botao-palavrachave");
+
+botaoMostraPalavras.addEventListener("click", mostraPalavrasChave);
+
+function mostraPalavrasChave() {
+  const texto = document.querySelector("#entrada-de-texto").value;
+
+  const campoResultado = document.querySelector("#resultado-palavrachave");
+
+  const palavrasChave = processaTexto(texto);
+
+  campoResultado.textContent = palavrasChave.join(",");
+}
+
+function processaTexto(texto) {
+  let palavras = texto.split(/\P{L}+/u);
+
+  let frequencias = {};
+  const Frequencias = contaFrequencias(palavras);
+  let ordenadas = Object.keys(frequencias).sort(ordenaPalavra);
+
+  function ordenaPalavra(p1, p2) {
+    return frequencias[p2] - frequencias[p1];
+  }
+  console.log(ordenadas);
+  return ordenadas.slice(0, 10);
+  return palavras;
+
+  for (let i of palavras) {
+    frequencias[i] = 0;
+    for (let j of palavras) {
+      if (i == j) {
+        frequencias[i]++;
+      }
+    }
+  }
+
+  return frequencias;
+  return palavras;
+}
+function contaFrequencias(palavras) {}
   max-height: 50vh; 
   overflow: auto; 
-} 
-
-
-const botaoMostraPalavras = document.querySelector("#botao-palavrachave"); 
-
-botaoMostraPalavras.addEventListener("click", mostraPalavrasChave); 
-
-function mostraPalavrasChave() { 
-  alert("fui clicado!"); 
 } 
